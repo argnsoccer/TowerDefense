@@ -4,6 +4,8 @@ local ui = require("ui")
 local toRemove = {}
 local rightBound = 410
 local leftBound = display.contentWidth/6
+display.setDefault("anchorX",0)
+display.setDefault("anchorY",0)
 
 --physics.setDrawMode("hybrid")
 
@@ -16,17 +18,22 @@ path1:setFillColor(120,42,42)
 local path2 = display.newRect(display.contentWidth/2 - 30, path1.contentHeight, 200, 60)
 path2:setFillColor(120,42,42)
 
+
 local path3 = display.newRect(path2.x + 40, path1.contentHeight + path2.contentHeight, 60, 125)
 path3:setFillColor(120,42,42)
+
 
 local path4 = display.newRect(display.contentWidth/6, 325, 270, 60)
 path4:setFillColor(120,42,42)
 
+
 local path5 = display.newRect(display.contentWidth/6, 325 + path4.contentHeight, 60, 125)
 path5:setFillColor(120,42,42)
 
+
 local path6 = display.newRect(path5.x + path5.width/2, path5.y + 2, 210 + path3.width, 60)
 path6:setFillColor(120,42,42)
+
 
 local path7 = display.newRect(path2.x + 40, display.contentCenterY + path6.height, 60, 125)
 path7:setFillColor(120, 42, 42)
@@ -46,6 +53,8 @@ path11:setFillColor(120, 42, 42)
 local RADIUS = 25
 creep = display.newCircle(display.contentWidth/2, RADIUS, RADIUS)
 creep:setFillColor(0, 0, 0, 0)
+creep.anchorX=0
+creep.anchorY=0
 physics.addBody(creep, "kinematic", {radius = 25})
 
 local money = 13500
@@ -115,7 +124,7 @@ local lives = 1000
 livesDisplay:setText (lives)
 
 
-local function animate(event)
+local function animate(event)--All hardcoded right now. Change soonTM
 
 	for i = 1, #creeps do
 	if(creeps[i].y + RADIUS + 5 > path1.height + path2.height and creeps[i].y < path1.height + path2.height + 50) then
@@ -266,4 +275,4 @@ end
 --Runtime:addEventListener("collision", onCollison);
 Runtime:addEventListener("touch", addTower);
 Runtime:addEventListener("enterFrame", animate);
-Runtime:addEventListener("enterFrame", LivesCount);
+Runtime:addEventListener("collision", LivesCount);
